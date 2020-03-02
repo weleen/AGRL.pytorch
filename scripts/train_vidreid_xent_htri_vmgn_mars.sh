@@ -1,0 +1,27 @@
+#!/bin/bash
+python train_vidreid_xent_htri.py -d mars \
+                                  -a vmgn \
+                                  --seq-len 8 \
+                                  --train-batch 16 \
+                                  --test-batch 16 \
+                                  --num-instances 4 \
+                                  --train-sample restricted \
+                                  --train-sampler RandomIdentitySamplerV1 \
+                                  --test-sample evenly \
+                                  --optim adam \
+                                  --soft-margin \
+                                  --lr 1e-4 \
+                                  --max-epoch 200 \
+                                  --stepsize 50 100 150 \
+                                  --num-split 4 \
+                                  --pyramid-part \
+                                  --num-gb 3 \
+                                  --use-pose \
+                                  --learn-graph \
+                                  --flip-aug \
+                                  --gpu-devices 0 \
+                                  --eval-step 5 \
+                                  --print-last \
+                                  --dist-metric cosine \
+                                  --consistent-loss \
+                                  --save-dir log/video/vmgn/mars-pyra-ngb3-consistent-x1
