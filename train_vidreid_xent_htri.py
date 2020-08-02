@@ -7,14 +7,15 @@ import time
 import datetime
 import argparse
 import os.path as osp
-import numpy as np
-import random
+# import numpy as np
+# import random
 
-import torch
+# import torch
 import torch.nn as nn
 import torch.backends.cudnn as cudnn
 from torch.utils.data import DataLoader
-from tensorboardX import SummaryWriter
+# from tensorboardX import SummaryWriter
+from torch.utils.tensorboard import SummaryWriter
 
 from torchreid import data_manager, metrics, lr_scheduler
 from torchreid.dataset_loader import VideoDataset
@@ -451,7 +452,7 @@ def train(epoch, model, criterion_xent, criterion_htri, optimizer, trainloader, 
     writer.add_scalar(tag='loss/htri_loss', scalar_value=htri_losses.avg, global_step=epoch + 1)
 
 
-def test(model, queryloader, galleryloader, pool, use_gpu, ranks=[1, 5, 10, 20], return_distmat=False):
+def test(model, queryloader, galleryloader, pool, use_gpu, ranks=(1, 5, 10, 20), return_distmat=False):
     batch_time = AverageMeter()
 
     model.eval()
