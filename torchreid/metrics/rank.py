@@ -213,7 +213,7 @@ def Compute_AP(good_image, junk_image, index):
 
 
 def evaluate_rank(distmat, q_pids, g_pids, q_camids, g_camids, max_rank=50, use_metric_cuhk03=False,
-                  use_metric_market1501=False, use_metric_mars=False, use_metric_dukev=False, use_cython=True):
+                  use_metric_market1501=False, use_metric_mars=False, use_cython=True):
     """
     Evaluate CMC and mAP.
     :param distmat: (numpy.ndarray): distance matrix of shape (num_query, num_gallery).
@@ -225,6 +225,7 @@ def evaluate_rank(distmat, q_pids, g_pids, q_camids, g_camids, max_rank=50, use_
     :param use_metric_cuhk03:
     :param use_metric_market1501:
     :param use_metric_mars:
+    :param use_metric_dukev: same as use_metric_mars
     :param use_cython:
     :return:
     """
@@ -235,8 +236,6 @@ def evaluate_rank(distmat, q_pids, g_pids, q_camids, g_camids, max_rank=50, use_
             return evaluate_py(distmat, q_pids, g_pids, q_camids, g_camids, max_rank, use_metric_cuhk03)
     elif use_metric_mars:
         return evaluate_mars(distmat, q_pids, g_pids, q_camids, g_camids, max_rank)
-    elif use_metric_dukev:
-        return evaluate_dukev(distmat, q_pids, g_pids, q_camids, g_camids, max_rank)
 
 
 # add from Dukemtmc video reid

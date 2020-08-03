@@ -15,7 +15,7 @@ python train_vidreid_xent_htri.py -d dukemtmcvidreid \
                                   --stepsize 50 100 150 \
                                   --num-split 4 \
                                   --pyramid-part \
-                                  --num-gb 3 \
+                                  --num-gb 2 \
                                   --use-pose \
                                   --learn-graph \
                                   --flip-aug \
@@ -24,4 +24,4 @@ python train_vidreid_xent_htri.py -d dukemtmcvidreid \
                                   --print-last \
                                   --dist-metric cosine \
                                   --consistent-loss \
-                                  --save-dir log/video/vmgn/duke-pyra-ngb3-consistent
+                                  --save-dir log/video/vmgn/duke-ngb2-consistent

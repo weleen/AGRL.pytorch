@@ -7,15 +7,11 @@ import time
 import datetime
 import argparse
 import os.path as osp
-# import numpy as np
-# import random
 
-# import torch
 import torch.nn as nn
 import torch.backends.cudnn as cudnn
 from torch.utils.data import DataLoader
-# from tensorboardX import SummaryWriter
-from torch.utils.tensorboard import SummaryWriter
+from tensorboardX import SummaryWriter
 
 from torchreid import data_manager, metrics, lr_scheduler
 from torchreid.dataset_loader import VideoDataset
@@ -97,8 +93,8 @@ parser.add_argument('--last-stride', type=int, default=1, choices=[1, 2],
 parser.add_argument('--num-split', type=int, default=4,
                     help='number of splits for horizontally spliting.')
 parser.add_argument('--num-parts', type=int, default=3,
-                    help='number of human parts, e.g. head, body, leg (default: 3).')
-parser.add_argument('--num-gb', type=int, default=3,
+                    help='number of human parts, e.g. head, trunk, leg (default: 3).')
+parser.add_argument('--num-gb', type=int, default=2,
                     help='number of graph block.')
 parser.add_argument('--num-scale', type=int, default=1,
                     help='number of scales, used for extract multi-scale features.')
@@ -298,7 +294,6 @@ def main():
         pickle.Unpickler = partial(pickle.Unpickler, encoding="latin1")
         checkpoint = torch.load(args.resume, map_location=lambda storage, loc: storage, pickle_module=pickle)
 
-        # checkpoint = torch.load(args.resume, map_location='cpu')
         print('Loaded model weights')
         model.load_state_dict(checkpoint['state_dict'])
         if optimizer is not None and 'optimizer' in checkpoint:
@@ -453,6 +448,7 @@ def train(epoch, model, criterion_xent, criterion_htri, optimizer, trainloader, 
 
 
 def test(model, queryloader, galleryloader, pool, use_gpu, ranks=(1, 5, 10, 20), return_distmat=False):
+    global mAP
     batch_time = AverageMeter()
 
     model.eval()
@@ -531,22 +527,15 @@ def test(model, queryloader, galleryloader, pool, use_gpu, ranks=(1, 5, 10, 20),
         distmat = re_ranking(distmat, distmat_qq, distmat_gg)
 
     print("Computing CMC and mAP")
-    eval_config = {
-        # 'market1501': {'use_metric_market1501': True,},
-        'mars': {'use_metric_mars': True},
-        # 'dukev': {'use_metric_dukev': True}
-    }
-    for cfg in eval_config.items():
-        print('Evaluation Config {}'.format(cfg[0]))
-        print('{}'.format(cfg))
-        cmc, mAP = metrics.evaluate_rank(distmat, q_pids, g_pids, q_camids, g_camids, **cfg[1])
 
-        print("Results ----------")
-        print("mAP: {:.2%}".format(mAP))
-        print("CMC curve")
-        for r in ranks:
-            print("Rank-{:<3}: {:.2%}".format(r, cmc[r-1]))
-        print("------------------")
+    cmc, mAP = metrics.evaluate_rank(distmat, q_pids, g_pids, q_camids, g_camids, use_metric_mars=True)
+
+    print("Results ----------")
+    print("mAP: {:.2%}".format(mAP))
+    print("CMC curve")
+    for r in ranks:
+        print("Rank-{:<3}: {:.2%}".format(r, cmc[r-1]))
+    print("------------------")
 
     if return_distmat:
         return distmat

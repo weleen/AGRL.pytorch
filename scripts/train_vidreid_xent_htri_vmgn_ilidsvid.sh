@@ -18,7 +18,7 @@ python train_vidreid_xent_htri.py -d ilidsvid \
                                   -a vmgn \
                                   --num-split 4 \
                                   --pyramid-part \
-                                  --num-gb 3 \
+                                  --num-gb 2 \
                                   --use-pose \
                                   --learn-graph \
                                   --flip-aug \
@@ -28,6 +28,6 @@ python train_vidreid_xent_htri.py -d ilidsvid \
                                   --dist-metric cosine \
                                   --consistent-loss \
                                   --split-id $i \
-                                  --save-dir log/video/vmgn/ilidsvid-ngb3-consistent/split"$i"
+                                  --save-dir log/video/vmgn/ilidsvid-ngb2-consistent/split"$i"
 let i=$i+1
 done

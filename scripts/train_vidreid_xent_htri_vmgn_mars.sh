@@ -15,7 +15,7 @@ python train_vidreid_xent_htri.py -d mars \
                                   --stepsize 50 100 150 \
                                   --num-split 4 \
                                   --pyramid-part \
-                                  --num-gb 3 \
+                                  --num-gb 2 \
                                   --use-pose \
                                   --learn-graph \
                                   --flip-aug \
@@ -24,4 +24,4 @@ python train_vidreid_xent_htri.py -d mars \
                                   --print-last \
                                   --dist-metric cosine \
                                   --consistent-loss \
-                                  --save-dir log/video/vmgn/mars-pyra-ngb3-consistent-x1
+                                  --save-dir log/video/vmgn/mars-ngb2-consistent
