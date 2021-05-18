@@ -43,7 +43,7 @@ Prepare datasets:
     └── train_test_splits_prid.mat
 ```
 `pose.json` is obtained by running [AlphaPose](https://github.com/MVIG-SJTU/AlphaPose), we put the files on [Baidu Netdisk](https://pan.baidu.com/s/1RduGEbq-tmfLAHM0k3xa4A) (code: luxr) and 
-[Google Driver](https://drive.google.com/drive/folders/1BVEjMava3UQh4jC2bp-tcFo1rOZDB8MS?usp=sharing).  
+[Google Driver](https://drive.google.com/drive/folders/1BVEjMava3UQh4jC2bp-tcFo1rOZDB8MS?usp=sharing)(only pose.json, please download the model from Baidu Netdisk).  
 
 More details could be found in [DATASETS.md](DATASETS.md).
 
